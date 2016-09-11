@@ -1,0 +1,88 @@
+vi readme.txt %进入文件q wq退出
+ls %查看文件夹内容
+
+$mkdir learngit
+$cd learngit
+$pwd
+$git init  %初始化
+
+$git add readme.txt
+$git commit -m"wrote a readme file"
+$git status
+$cat readme.txt %查看内容
+
+$git diff readme.txt   
+%工作区（work dict）和暂存区（stage）比较
+$git diff HEAD -- readme.txt  
+%暂存区（stage）和分支（master）比较
+
+$git log 
+$git reflog
+$git log --pretty=oneline
+%查看版本日志
+
+$git reset --hard HEAD^ 
+$git reset --hard HEAD~100
+$git reset --hard 10f939e
+%回退版本
+
+$git checkout -- readme.txt 
+%丢弃工作区的修改或删除，其实是用版本库里的版本替换工作区的版本
+$git reset HEAD readme.txt %撤销（unstage）暂存区的修改，重新放回工作区
+%HEAD表示最新版本
+
+git rm test.txt %删除文件
+
+%远程库 通过公钥
+$git remote add origin git@github.com:COREENE/gitskills.git  %关联远程库
+$git push -u origin master %第一次推送加-u参数关联
+$git push origin master %当前分支master推送到远程
+$ git clone  git@github.com:COREENE/gitskills.git
+%从远程库克隆
+
+%创建与合并分支
+$git branch  %查看分支
+$git branch <name>  %创建分支
+$git checkout <name>  %切换分支
+$git checkout -b <name>  %创建+切换分支
+$git merge <name>  %合并某分支到当前分支Fast forward模式
+$git branch -d <name>  %删除分支
+$git branch -D <name>  %强行删除未合并的分支
+git log --graph --pretty=oneline --abbrev-commit %看分支合并图
+$ git merge --no-ff -m "merge with no-ff" dev %普通模式合并，从分支历史上就可以看出分支信息
+%不能在master上工作，只用于合并，在dev上工作
+$git stash %储存工作现场
+$git stash apply %恢复stash
+$git stash drop %删除stash
+$git stash pop %恢复+删除stash
+git stash list %查看stash
+
+%
+master分支中的Bug修正了，dev分支中的Bug未修正，dev合并到master的时候是否会引起冲突？为避免这种情况，dev分支可以从master分支中更新代码吗？或者其他的解决方式？
+保险的做法是先把master分支merge到dev分支，如果有冲突，先在dev分支上解决冲突，然后再把dev分支merge到master，就肯定成功。
+
+%多人协作
+$git remote %查看远程库信息
+$git remote -v %查看详细信息
+$git push origin branch-name %推送分支
+$git pull %从远程抓取分支
+$git checkout -b branch-name origin/branch-name %在本地创建和远程分支对应的分支，若本地还没有'branch-name'分支信息，需要先fetch或者pull
+$git branch --set-upstream branch-name origin/branch-name
+%建立本地分支和远程分支的关联
+
+%标签管理 
+$git tag <tagname> %新建标签
+$git log --pretty=online --abbrev-commit %查看历史提交的commit id
+$git tag <tagname> <commit id>
+$git tag %查看标签
+$git show <tagname> %查看标签信息
+$git tag -a <tagname> -m"blablabla…" <commit id> %创建带有说明的标签，-a指定标签名，-m指定说明文字
+$git tag -s <tagname> -m"blablabla…" <commit id> 
+%-s私钥签名标签，签名采用PGP签名
+$git tag -d <tagname> %删除标签
+$git push origin <tagname> %推送标签到远程
+$git push origin --tags %推送全部尚未推送的标签到远程
+$git push origin :refs/tags/<tagname> %本地删除后从远程删除
+
+$git config --global alias.a 'b' %配置别名
+
